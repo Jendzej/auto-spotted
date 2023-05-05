@@ -11,6 +11,7 @@ textarea {
     font-family: 'Comme', sans-serif;
     margin: 10px;
     resize: none;
+    font-size: 30px;
 }
 
 textarea:focus {
