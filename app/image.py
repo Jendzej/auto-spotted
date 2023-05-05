@@ -51,7 +51,7 @@ def create_image(text):
 
     img.save(f"{os.getcwd()}/image.jpg")
     time.sleep(5)
-    with open("image.png", "rb") as image_file:
+    with open("image.jpg", "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read())
 
     image_url = upload_image(encoded_string.decode("utf-8"))
