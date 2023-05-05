@@ -40,6 +40,13 @@ def draw_multiple_line_text(image, text, font, text_color, text_start_height):
         y_text += line_height
 
 
+def remove_old_images(current_image_number):
+    try:
+        os.remove(f"{os.getcwd()}/image{current_image_number - 2}.jpg")
+    except OSError:
+        pass
+
+
 def create_image(text):
     try:
         global posts_count
@@ -49,9 +56,9 @@ def create_image(text):
 
         draw_multiple_line_text(img, text, font, (0, 0, 0), 20)
 
-        img.save(f"{os.getcwd()}/image.jpg")
-
-        with open("image.jpg", "rb") as image_file:
+        img.save(f"{os.getcwd()}/image{posts_count}.jpg")
+        remove_old_images(posts_count)
+        with open(f"image{posts_count}.jpg", "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read())
 
         image_url = upload_image(encoded_string.decode("utf-8"))
