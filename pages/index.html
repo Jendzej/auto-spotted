@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="styles.css">
+    <title>Auto Spotted ZSET</title>
+    <script src="https://kit.fontawesome.com/aa9e7a0864.js" crossorigin="anonymous"></script>
+    <script language="javascript">
+        function resetData() {
+            const messageArea = document.getElementById("message");
+            messageArea.value = ""
+        }
+
+        function handleButtonClick() {
+            sendMessage().then((data) => {
+                if (data["status_code"] == 200) {
+                    console.log(data["message"])
+                    location.href = "https://www.instagram.com/auto.spotted.zset/"
+                }
+            })
+        }
+
+        async function sendMessage() {
+            const dataToSend = document.getElementById("message").value
+            if (dataToSend.replaceAll(" ", "") !== "") {
+                alert("Wiadomość jest przetwarzana. Za chwilę nastąpi przekierowanie...")
+                const response = await fetch(
+                    "http://127.0.0.1:8000/",
+                    {
+                        method: "POST",
+                        mode: "cors",
+                        headers: {
+                            "Access-Control-Request-Method": "POST",
+                            "accept": "application/json",
+                            "Access-Control-Request-Headers": ["Content-Type", "Authorization"],
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({"message": dataToSend})
+                    }
+                )
+                return response.json()
+            } else {
+                alert("Nie można wysłać pustej wiadomości.")
+            }
+
+        }
+
+        function showAbout() {
+            document.getElementById("about").style.display = "block"
+            document.getElementById("contact").style.display = "none"
+        }
+
+        function showContact() {
+            document.getElementById("about").style.display = "none"
+            document.getElementById("contact").style.display = "block"
+        }
+    </script>
+</head>
+<body onload="resetData()">
+<div id="content">
+    <h1>Auto Spotted ZSET</h1>
+    <form id="send-message-form">
+        <label for="message">Wiadomość: </label><br>
+        <textarea id="message" name="message" maxlength="250" rows="7" cols="20"></textarea><br>
+        <input type="button" value="Wyślij" onclick="handleButtonClick()">
+    </form>
+</div>
+<footer>
+    <p onclick="showAbout()" title="Kliknij, aby rozwinąć">O spotted<br><i class="fa-solid fa-user"></i></p>
+    <p onclick="showContact()" title="Kliknij, aby rozwinąć">Kontakt<br><i class="fa-solid fa-phone"></i></p>
+    <p onclick="location.href= 'https://www.instagram.com/auto.spotted.zset/'" title="instagram.com">Instagram<br><i
+            class="fa-brands fa-instagram"></i></p>
+</footer>
+<div id="about">
+    <h2>O Auto Spotted ZSET</h2>
+    <p>
+        Auto Spotted ZSET to zautomatyzowana wersja zwykłego spotted. Dzięki wykorzystaniu różnych technologii,
+        publikacja wpisów nie jest uzależniona od żadnej osoby, przez co posty wstawiane są kilka sekund po wysłaniu
+        wiadomości!
+    </p>
+    <h3>Kod źródłowy</h3>
+    <p>
+        Kod źródłowy, dokumentacja oraz więcej o zastosowanych technologiach można znaleźć na github, <a
+            href="https://github.com/Jendzej/auto-spotted/tree/main">link do repozytorium</a>.
+    </p>
+</div>
+<div id="contact">
+    <h2>Kontakt</h2>
+    <p>
+        Adres email: <a href=mailto:"auto.spotted.zset@gmail.com">auto.spotted.zset@gmail.com</a><br>
+        Wiadomość prywatna na Instagramie: <a href="https://ig.me/m/auto.spotted.zset">link</a>
+    </p>
+</div>
+</body>
+</html>
