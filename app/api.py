@@ -23,23 +23,23 @@ app.add_middleware(
 
 @app.post("/")
 async def send_message(body: dict):
-    try:
-        logger.info(f"Creating post with text: \n {body['message']}")
-        response = create_image(body["message"])
-        if response:
-            report_added_post(body["message"])
-        else:
-            report_error(response)
-        return {
-            "status_code": 200,
-            "message": "Successfully added post"
-        }
-    except Exception as er:
-        logger.error(er)
-        return {
-            "status_code": 400,
-            "message": er
-        }
+    # try:
+    logger.info(f"Creating post with text: \n {body['message']}")
+    response = create_image(body["message"])
+    if response:
+        report_added_post(body["message"])
+    else:
+        report_error(response)
+    return {
+        "status_code": 200,
+        "message": "Successfully added post"
+    }
+    # except Exception as er:
+    #     logger.error(er)
+    #     return {
+    #         "status_code": 400,
+    #         "message": er
+    #     }
 
 
 if __name__ == "__main__":
