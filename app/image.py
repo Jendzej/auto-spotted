@@ -51,8 +51,8 @@ def create_image(text):
 
         draw_multiple_line_text(img, text, font, (0, 0, 0), 20)
 
-        img.save(f"{os.getcwd()}/image.png")
-        time.sleep(3)
+        img.save(f"{os.getcwd()}/image.jpg")
+        time.sleep(5)
         with open("image.png", "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read())
 
