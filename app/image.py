@@ -45,7 +45,7 @@ def create_image(text):
     global posts_count
     posts_count += 1
     img = Image.new('RGB', (400, 400), (255, 255, 255))
-    font = ImageFont.truetype("arial", 24)
+    font = ImageFont.load_default()
 
     draw_multiple_line_text(img, text, font, (0, 0, 0), 20)
 
