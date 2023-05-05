@@ -7,6 +7,7 @@ import requests
 from PIL import ImageDraw, Image, ImageFont
 from dotenv import load_dotenv
 
+from log import logger
 from publish import send_image_to_instagram
 
 load_dotenv()
@@ -60,4 +61,5 @@ def create_image(text):
 
         return True
     except Exception as er:
-        return er
+        logger.error(er)
+        raise er
