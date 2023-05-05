@@ -45,7 +45,7 @@ async def send_message(body: dict):
 if __name__ == "__main__":
     uvicorn.run(
         "api:app",
-        host="127.0.0.1",
+        host="0.0.0.0",
         reload=True,
         port=8000
     )
