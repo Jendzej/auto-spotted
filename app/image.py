@@ -7,7 +7,6 @@ import requests
 from PIL import ImageDraw, Image, ImageFont
 from dotenv import load_dotenv
 
-from log import logger
 from publish import send_image_to_instagram
 
 load_dotenv()
@@ -43,23 +42,19 @@ def draw_multiple_line_text(image, text, font, text_color, text_start_height):
 
 
 def create_image(text):
-    try:
-        global posts_count
-        posts_count += 1
-        img = Image.new('RGB', (400, 400), (255, 255, 255))
-        font = ImageFont.truetype("arial", 24)
+    global posts_count
+    posts_count += 1
+    img = Image.new('RGB', (400, 400), (255, 255, 255))
+    font = ImageFont.truetype("arial", 24)
 
-        draw_multiple_line_text(img, text, font, (0, 0, 0), 20)
+    draw_multiple_line_text(img, text, font, (0, 0, 0), 20)
 
-        img.save(f"{os.getcwd()}/image.jpg")
-        time.sleep(5)
-        with open("image.png", "rb") as image_file:
-            encoded_string = base64.b64encode(image_file.read())
+    img.save(f"{os.getcwd()}/image.jpg")
+    time.sleep(5)
+    with open("image.png", "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
 
-        image_url = upload_image(encoded_string.decode("utf-8"))
-        send_image_to_instagram(f"Post numer {posts_count}", image_url, instagram_account_id, access_token)
+    image_url = upload_image(encoded_string.decode("utf-8"))
+    send_image_to_instagram(f"Post numer {posts_count}", image_url, instagram_account_id, access_token)
 
-        return True
-    except Exception as er:
-        logger.error(er)
-        raise er
+    return True
