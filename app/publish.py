@@ -1,7 +1,8 @@
 import requests
+from dotenv import load_dotenv
+
 from log import logger
 
-from dotenv import load_dotenv
 load_dotenv()
 
 graph_url = 'https://graph.facebook.com/v16.0/'

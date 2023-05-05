@@ -1,7 +1,8 @@
-from log import logger
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
+
 from image import create_image
+from log import logger
 from mailer import report_error, report_added_post
 
 app = FastAPI()

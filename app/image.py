@@ -1,13 +1,14 @@
 import base64
+import os
+import textwrap
 import time
 
 import requests
 from PIL import ImageDraw, Image, ImageFont
-import os
-import textwrap
+from dotenv import load_dotenv
+
 from publish import send_image_to_instagram
 
-from dotenv import load_dotenv
 load_dotenv()
 
 posts_count = 0
