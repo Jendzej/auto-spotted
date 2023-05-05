@@ -1,13 +1,11 @@
 import base64
 import os
 import textwrap
-import time
 
 import requests
 from PIL import ImageDraw, Image, ImageFont
 from dotenv import load_dotenv
 
-from log import logger
 from publish import send_image_to_instagram
 
 load_dotenv()
@@ -47,13 +45,13 @@ def create_image(text):
         global posts_count
         posts_count += 1
         img = Image.new('RGB', (400, 400), (255, 255, 255))
-        font = ImageFont.truetype("arial", 24)
+        font = ImageFont.truetype(f"{os.getcwd()}/opensans.ttf", 24)
 
         draw_multiple_line_text(img, text, font, (0, 0, 0), 20)
 
         img.save(f"{os.getcwd()}/image.jpg")
-        time.sleep(5)
-        with open("image.png", "rb") as image_file:
+
+        with open("image.jpg", "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read())
 
         image_url = upload_image(encoded_string.decode("utf-8"))
@@ -61,5 +59,4 @@ def create_image(text):
 
         return True
     except Exception as er:
-        logger.error(er)
         raise er
