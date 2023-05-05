@@ -1,7 +1,6 @@
 import base64
 import os
 import textwrap
-import time
 
 import requests
 from PIL import ImageDraw, Image, ImageFont
@@ -42,19 +41,22 @@ def draw_multiple_line_text(image, text, font, text_color, text_start_height):
 
 
 def create_image(text):
-    global posts_count
-    posts_count += 1
-    img = Image.new('RGB', (400, 400), (255, 255, 255))
-    font = ImageFont.truetype(f"{os.getcwd()}/opensans.ttf", 24)
+    try:
+        global posts_count
+        posts_count += 1
+        img = Image.new('RGB', (400, 400), (255, 255, 255))
+        font = ImageFont.truetype(f"{os.getcwd()}/opensans.ttf", 24)
 
-    draw_multiple_line_text(img, text, font, (0, 0, 0), 20)
+        draw_multiple_line_text(img, text, font, (0, 0, 0), 20)
 
-    img.save(f"{os.getcwd()}/image.jpg")
-    time.sleep(5)
-    with open("image.jpg", "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
+        img.save(f"{os.getcwd()}/image.jpg")
 
-    image_url = upload_image(encoded_string.decode("utf-8"))
-    send_image_to_instagram(f"Post numer {posts_count}", image_url, instagram_account_id, access_token)
+        with open("image.jpg", "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read())
 
-    return True
+        image_url = upload_image(encoded_string.decode("utf-8"))
+        send_image_to_instagram(f"Post numer {posts_count}", image_url, instagram_account_id, access_token)
+
+        return True
+    except Exception as er:
+        raise er
