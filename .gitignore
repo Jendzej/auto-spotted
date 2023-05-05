@@ -1,2 +1,4 @@
 .idea/
-image.jpg
+image.*
+logs/
+.env
