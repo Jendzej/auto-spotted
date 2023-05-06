@@ -32,9 +32,9 @@ def publish_image_on_instagram(instagram_account_id: str, container_id: str, acc
 
     response = requests.post(url, params=param)
     response = response.json()
+    logger.debug(f"Response: {response}")
     if 'error' not in response.keys():
         logger.info("Successfully published photo on Instagram.")
-        logger.debug(f"Response: {response}")
         return response
     else:
         logger.error(f"{response['error']['message']}")
