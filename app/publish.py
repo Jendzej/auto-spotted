@@ -38,3 +38,4 @@ def publish_image_on_instagram(instagram_account_id: str, container_id: str, acc
         return response
     else:
         logger.error(f"{response['error']['message']}")
+        raise Exception(response)
