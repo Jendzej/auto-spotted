@@ -36,6 +36,7 @@ async def send_message(body: dict):
         }
     except Exception as er:
         logger.error(er)
+        report_error(er)
         return {
             "status_code": 400,
             "message": er
