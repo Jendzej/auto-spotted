@@ -39,7 +39,7 @@ async def send_message(body: dict):
         report_error(er)
         return {
             "status_code": 400,
-            "message": er
+            "message": str(er)
         }
 
 

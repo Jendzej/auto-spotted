@@ -104,6 +104,9 @@
                 if (data["status_code"] == 200) {
                     console.log(data["message"])
                     location.href = "https://www.instagram.com/auto.spotted.zset/"
+                } else {
+                    console.log(data)
+                    console.log(data.type)
                 }
             })
         }
@@ -111,7 +114,7 @@
         async function sendMessage() {
             const dataToSend = document.getElementById("message").value
             if (dataToSend.replaceAll(" ", "") !== "") {
-                alert("Wiadomość jest przetwarzana. Za chwilę nastąpi przekierowanie...")
+                alert("Wiadomość jest przetwarzana. Proszę czekać...")
                 const response = await fetch(
                     "http://130.61.254.123:8000/",
                     {
