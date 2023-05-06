@@ -105,8 +105,11 @@
                     console.log(data["message"])
                     location.href = "https://www.instagram.com/auto.spotted.zset/"
                 } else {
-                    console.log(data)
-                    console.log(data.type)
+                    let replaced = data["message"].replaceAll("'", '"')
+                    replaced = replaced.replaceAll("False", "false")
+                    replaced = replaced.replaceAll("True", "true")
+                    const message = JSON.parse(replaced)
+                    alert(message["error"]["error_user_msg"])
                 }
             })
         }
