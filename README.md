@@ -68,7 +68,6 @@ Po wpisaniu wiadomości na stronie i wciśnięciu przycisku, wykonuje się zapyt
 >
 > *Fragment funkcji z pliku [index.html](pages/index.html)*
 
-
 API stworzone jest przy użyciu webowego frameworka ***FastAPI*** w języku Python. Otrzymane od frontendu wiadomości są
 na początku sprawdzane pod względem wulgaryzmów - jeżeli jakiś się pojawi, backend zwraca o tym informację do strony i
 post się nie publikuje. Lista wulgaryzmów, które są sprawdzane, dostępna jest [tutaj](app/banned_words.txt).
@@ -85,7 +84,6 @@ post się nie publikuje. Lista wulgaryzmów, które są sprawdzane, dostępna je
 >
 > *Fragment funkcji z pliku [api.py](app/api.py)*
 
-
 Następnym krokiem jest zamiana tekstu na zdjęcie, do którego wykorzystywany jest moduł Pillow oraz pilmoji, dzięki
 którym możliwe jest wstawienie tekstu do zdjęcia z tłem.
 
@@ -97,7 +95,6 @@ którym możliwe jest wstawienie tekstu do zdjęcia z tłem.
 > ```
 >
 > *Fragment funkcji z pliku [image.py](app/image.py)*
-
 
 Gotowe zdjęcie jednak nie może zostać wysłane od razu na Instagrama - do publikacji potrzebny jest adres url do zdjęcia,
 a nie sam plik. Dlatego też zdjęcia wysyłane są za pomocą zapytania POST do API serwisu Imgur, który umożliwia
@@ -119,7 +116,6 @@ przesyłanie zdjęć w formie bitów, zwracając link.
 >
 > *Fragment kodu z pliku [image.py](app/image.py)*
 
-
 Otrzymany z powyższej funkcji adres url, przesyłany jest, również za pomocą zapytania POST, do API Instagrama, na którym
 już przebiega końcowa część publikacji zdjęcia.
 
@@ -127,4 +123,49 @@ już przebiega końcowa część publikacji zdjęcia.
 
 ## Konfiguracja i uruchomienie <a id="konfiguracja"></a>
 
-TODO: Finish this
+#### Zmienne środowiskowe
+
+Aby poprawnie uruchomić aplikację, należy na początku uzupełnić zmienne środowiskowe. Powinny one znajdować się w pliku
+***.env*** w głównym katalogu projektu.
+
+Do szybszego stworzenia pliku można wykorzystać plik [.env.example](.env.example).
+
+```shell
+cp .env.example .env
+```
+
+Opis poszczególnych zmiennych środowiskowych
+
+
+| **Nazwa**            | **Opis**                                                                                                                                                | **Wartość domyślna**     |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
+| INSTAGRAM_ACCOUNT_ID | ID konta Instagram połączonego z aplikacją                                                                                                           |                             |
+| ACCESS_TOKEN         | Token dostępu do aplikacji z uprawnieniami do zarządzania treścią ([link do wygenerowania tokenu](https://developers.facebook.com/tools/explorer/)) |                             |
+| IMGUR_CLIENT_ID      | ID konta na platformie Imgur (do publikacji zdjęć, by dostać adres url)                                                                             |                             |
+| IMGUR_CLIENT_SECRET  | Hasło do konta na platformie Imgur                                                                                                                     |                             |
+| SMTP_PORT            | Port serwera SMTP                                                                                                                                       | 465                         |
+| SMTP_PASSWORD        | Hasło do konta, z którego wysyłane są maile do administratora                                                                                       |                             |
+| SMTP_MAIL            | Mail konta, z którego wysyłane są maile do administratora                                                                                           | auto.spotted.zset@gmail.com |
+| ADMIN_MAIL           | Mail konta administratora                                                                                                                               |                             |
+
+
+Po uzupełnieniu wszystkich zmiennych w pliku ***.env***, należy zainstalować na serwerze usługi Apache2 oraz Python3.10, a następnie wszystkie biblioteki Pythona, które dostępne są w pliku [requirements.txt](requirements.txt).
+
+Można zrobić to za pomocą komendy:
+
+```shell
+python3.10 -m pip install -r requirements.txt
+```
+
+
+Gdy moduły zostaną zainstalowane, można uruchomić backend - przechodząc najpierw do katalogu ***/app***, a następnie uruchamiając plik [api.py](app/api.py) wpisując komendę:
+
+```shell
+python3.10 api.py
+```
+
+
+Jeżeli aplikacja działa, należy edytować plik [index.html](pages/index.html) i w linijce numer 130 zmienić adres IP na adres IP, na którym działa backend. Po tej zmianie można uruchomić usługę Apache2 ([poradnik](https://soisk.info/index.php/Linux_Ubuntu_-_Instalacja_i_konfiguracja_serwera_Apache2)).
+
+
+Po prawidłowej konfiguracji strona powinna mieć możliwość komunikacji z backendem, a dzięki temu powinna poprawnie działać.
