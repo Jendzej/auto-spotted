@@ -100,16 +100,22 @@
         }
 
         function handleButtonClick() {
+            const button = document.getElementById("send-button")
             sendMessage().then((data) => {
                 if (data["status_code"] == 200) {
                     console.log(data["message"])
                     location.href = "https://www.instagram.com/auto.spotted.zset/"
+                } else if (data["status_code"] == 451) {
+                    alert("Proszę o nieużywanie wulgaryzmów")
+                    resetData()
+                    button.disabled = false
                 } else {
                     let replaced = data["message"].replaceAll("'", '"')
                     replaced = replaced.replaceAll("False", "false")
                     replaced = replaced.replaceAll("True", "true")
                     const message = JSON.parse(replaced)
                     alert(message["error"]["error_user_msg"])
+                    button.disabled = false
                 }
             })
         }
@@ -118,6 +124,8 @@
             const dataToSend = document.getElementById("message").value
             if (dataToSend.replaceAll(" ", "") !== "") {
                 alert("Wiadomość jest przetwarzana. Proszę czekać...")
+                const button = document.getElementById("send-button")
+                button.disabled = true
                 const response = await fetch(
                     "http://130.61.254.123:8000/",
                     {
@@ -156,7 +164,7 @@
     <form id="send-message-form">
         <label for="message">Wiadomość: </label><br>
         <textarea id="message" name="message" maxlength="250" rows="7" cols="20"></textarea><br>
-        <input type="button" value="Wyślij" onclick="handleButtonClick()">
+        <input type="button" value="Wyślij" id="send-button" onclick="handleButtonClick()">
     </form>
 </div>
 <footer>

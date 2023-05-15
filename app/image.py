@@ -1,10 +1,13 @@
 import base64
+import datetime
 import os
 import textwrap
+import time
 
 import requests
-from PIL import ImageDraw, Image, ImageFont
+from PIL import Image, ImageFont
 from dotenv import load_dotenv
+from pilmoji import Pilmoji
 
 from publish import send_image_to_instagram
 
@@ -29,20 +32,20 @@ def upload_image(image):
 
 
 def draw_multiple_line_text(image, text, font, text_color, text_start_height):
-    draw = ImageDraw.Draw(image)
-    image_width, image_height = image.size
-    y_text = text_start_height
-    lines = textwrap.wrap(text, width=22)
-    for line in lines:
-        line_width, line_height = font.getsize(line)
-        draw.text(((image_width - line_width) / 2, y_text),
-                  line, font=font, fill=text_color)
-        y_text += line_height
+    with Pilmoji(image) as pilmoji:
+        image_width, image_height = image.size
+        y_text = text_start_height
+        lines = textwrap.wrap(text, width=27)
+        for line in lines:
+            line_width, line_height = font.getsize(line)
+            pilmoji.text((round((image_width - line_width) / 2), y_text),
+                         line, font=font, fill=text_color)
+            y_text += line_height
 
 
 def remove_old_images(current_image_number):
     try:
-        os.remove(f"{os.getcwd()}/image{current_image_number - 2}.jpg")
+        os.remove(f"{os.getcwd()}/images/image{current_image_number - 2}.png")
     except OSError:
         pass
 
@@ -51,18 +54,23 @@ def create_image(text):
     try:
         global posts_count
         posts_count += 1
-        img = Image.new('RGB', (400, 400), (255, 255, 255))
-        font = ImageFont.truetype(f"{os.getcwd()}/opensans.ttf", 24)
+        img = Image.open(f"{os.getcwd()}/images/base.png")
+        font = ImageFont.truetype(f"{os.getcwd()}/fonts/NotoSansNandinagari-Regular.ttf", 50, encoding='utf-8')
 
-        draw_multiple_line_text(img, text, font, (0, 0, 0), 20)
+        draw_multiple_line_text(img, text, font, (255, 255, 255), 120)
 
-        img.save(f"{os.getcwd()}/image{posts_count}.jpg")
+        img.save(f"{os.getcwd()}/images/image{posts_count}.png")
+
         remove_old_images(posts_count)
-        with open(f"image{posts_count}.jpg", "rb") as image_file:
+
+        while not os.path.exists(f"{os.getcwd()}/images/image{posts_count}.png"):
+            time.sleep(1)
+        with open(f"{os.getcwd()}/images/image{posts_count}.png", "rb") as image_file:
             encoded_string = base64.b64encode(image_file.read())
 
         image_url = upload_image(encoded_string.decode("utf-8"))
-        send_image_to_instagram(f"Post numer {posts_count}", image_url, instagram_account_id, access_token)
+        caption = f'{datetime.datetime.now().strftime("%c")}'
+        send_image_to_instagram(caption, image_url, instagram_account_id, access_token)
 
         return True
     except Exception as er:
