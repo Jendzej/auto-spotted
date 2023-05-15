@@ -26,7 +26,7 @@ async def send_message(body: dict):
     try:
         with open("banned_words.txt", "r") as f:
             for line in f.readlines():
-                if line.strip() in body["message"]:
+                if line.strip() in body["message"].replace(" ", ""):
                     return {
                         "status_code": 451,
                         "message": "Unavailable For Legal Reasons"
