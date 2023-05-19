@@ -9,6 +9,7 @@ from PIL import Image, ImageFont
 from dotenv import load_dotenv
 from pilmoji import Pilmoji
 
+from log import logger
 from publish import send_image_to_instagram
 
 load_dotenv()
@@ -19,16 +20,20 @@ access_token = os.getenv("ACCESS_TOKEN")
 
 
 def upload_image(image):
-    url = "https://api.imgur.com/3/image"
-    headers = {
-        "Authorization": f"Client-ID {os.getenv('IMGUR_CLIENT_ID')}"
-    }
-    payload = {
-        "image": image
-    }
-    files = []
-    response = requests.request("POST", url, headers=headers, data=payload, files=files)
-    return response.json()['data']['link']
+    try:
+        url = "https://api.imgur.com/3/image"
+        headers = {
+            "Authorization": f"Client-ID {os.getenv('IMGUR_CLIENT_ID')}"
+        }
+        payload = {
+            "image": image
+        }
+        files = []
+        response = requests.request("POST", url, headers=headers, data=payload, files=files)
+        logger.debug(f"Imgur response: {response}")
+        return response.json()['data']['link']
+    except Exception as er:
+        raise er
 
 
 def draw_multiple_line_text(image, text, font, text_color, text_start_height):
