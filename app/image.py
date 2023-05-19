@@ -30,7 +30,7 @@ def upload_image(image):
         }
         files = []
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
-        logger.debug(f"Imgur response: {response}")
+        logger.debug(f"Imgur response: {response.json()}")
         return response.json()['data']['link']
     except Exception as er:
         raise er
