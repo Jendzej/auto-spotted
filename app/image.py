@@ -4,12 +4,11 @@ import os
 import textwrap
 import time
 
-import requests
 from PIL import Image, ImageFont
 from dotenv import load_dotenv
+from imagekitio import ImageKit
 from pilmoji import Pilmoji
 
-from log import logger
 from publish import send_image_to_instagram
 
 load_dotenv()
@@ -21,17 +20,16 @@ access_token = os.getenv("ACCESS_TOKEN")
 
 def upload_image(image):
     try:
-        url = "https://api.imgur.com/3/image"
-        headers = {
-            "Authorization": f"Client-ID {os.getenv('IMGUR_CLIENT_ID')}"
-        }
-        payload = {
-            "image": image
-        }
-        files = []
-        response = requests.request("POST", url, headers=headers, data=payload, files=files)
-        logger.debug(f"Imgur response: {response.json()}")
-        return response.json()['data']['link']
+        imagekit = ImageKit(
+            private_key=f'{os.getenv("IMAGE_KIT_PRIVATE")}=',
+            public_key=f'{os.getenv("IMAGE_KIT_PUBLIC")}=',
+            url_endpoint=os.getenv("IMAGE_KIT_ENDPOINT")
+        )
+        upload = imagekit.upload_file(
+            file=image,
+            file_name=f"image{posts_count}.png",
+        )
+        return upload.response_metadata.raw['url']
     except Exception as er:
         raise er
 
