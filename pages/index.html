@@ -133,6 +133,7 @@
                 alert("Wiadomość jest zbyt krótka")
                 resetData()
                 button.disabled = false
+                return
             }
             if (dataToSend.replaceAll(" ", "") !== "") {
                 alert("Wiadomość jest przetwarzana. Proszę czekać...")
