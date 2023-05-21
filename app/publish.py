@@ -9,6 +9,7 @@ graph_url = 'https://graph.facebook.com/v16.0/'
 
 
 def send_image_to_instagram(caption, image_url, instagram_account_id, access_token):
+    """ Send image url and caption to Instagram API and get ID of it """
     url = graph_url + instagram_account_id + '/media'
     param = dict()
     param['access_token'] = access_token
@@ -26,6 +27,7 @@ def send_image_to_instagram(caption, image_url, instagram_account_id, access_tok
 
 
 def publish_image_on_instagram(instagram_account_id: str, container_id: str, access_token: str):
+    """ Publishing uploaded image on Instagram """
     url = graph_url + instagram_account_id + "/media_publish"
     param = {"creation_id": container_id,
              "access_token": access_token}

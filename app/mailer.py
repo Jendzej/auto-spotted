@@ -43,7 +43,7 @@ def report_added_post(message):
 
 def report_error(message):
     message_to_send = MIMEMultipart("alternative")
-    message_to_send["Subject"] = "Auto Spotted Report - Successfully added post"
+    message_to_send["Subject"] = "Auto Spotted Report - Some error occured"
     message_to_send["From"] = os.getenv("SMTP_MAIL")
     message_to_send["To"] = os.getenv("ADMIN_MAIL")
     text = f"""\
@@ -55,7 +55,7 @@ def report_error(message):
     html = f"""\
             <html>
               <body style="background-color: #d1e3ff;">
-                <h1 style="background-color: white; border: 1px solid red;">Some error occurred...</h1>
+                <h1 style="background-color: white; border: 1px solid red; padding: 3px;">Some error occurred...</h1>
                 <i style="color: grey; font-size: 10px;">Auto Spotted ZSET</i>
                 <h3>Error message:</h3>
                 <p style="padding: 10px; color: #520a12;">{message}</p>

@@ -19,6 +19,7 @@ access_token = os.getenv("ACCESS_TOKEN")
 
 
 def upload_image(image):
+    """ Upload image to imagekit and get URL of it """
     try:
         imagekit = ImageKit(
             private_key=f'{os.getenv("IMAGE_KIT_PRIVATE")}=',
@@ -35,6 +36,7 @@ def upload_image(image):
 
 
 def draw_multiple_line_text(image, text, font, text_color, text_start_height):
+    """ Line wrapping """
     with Pilmoji(image) as pilmoji:
         image_width, image_height = image.size
         y_text = text_start_height
@@ -47,6 +49,7 @@ def draw_multiple_line_text(image, text, font, text_color, text_start_height):
 
 
 def remove_old_images(current_image_number):
+    """ Deleting old images from server """
     try:
         os.remove(f"{os.getcwd()}/images/image{current_image_number - 2}.png")
     except OSError:
@@ -54,6 +57,7 @@ def remove_old_images(current_image_number):
 
 
 def create_image(text):
+    """ Creating image with given text based on base.png """
     try:
         global posts_count
         posts_count += 1

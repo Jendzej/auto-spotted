@@ -111,7 +111,7 @@
                 if (data["status_code"] == 200) {
                     console.log(data["message"])
                     location.href = "https://www.instagram.com/auto.spotted.zset/"
-                } else if (data["status_code"] == 451) {
+                } else if (data["status_code"] == 422) {
                     alert("Proszę o nieużywanie wulgaryzmów")
                     resetData()
                     button.disabled = false
@@ -128,6 +128,12 @@
 
         async function sendMessage() {
             const dataToSend = document.getElementById("message").value
+            const button = document.getElementById("send-button")
+            if (dataToSend.replaceAll(" ", "").length <= 5) {
+                alert("Wiadomość jest zbyt krótka")
+                resetData()
+                button.disabled = false
+            }
             if (dataToSend.replaceAll(" ", "") !== "") {
                 alert("Wiadomość jest przetwarzana. Proszę czekać...")
                 const button = document.getElementById("send-button")
