@@ -28,6 +28,7 @@ async def send_message(body: dict):
         with open("banned_words.txt", "r") as f:
             for line in f.readlines():
                 if line.strip() in body["message"].replace(" ", "").lower() or len(body["message"]) <= 5:
+                    report_error(body["message"])
                     return {
                         "status_code": 422,
                         "message": "Unprocessable entity"
