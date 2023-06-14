@@ -100,6 +100,45 @@
         #color {
             margin: 10px;
         }
+
+        option[value="basic"] {
+            background-color: #3B4879;
+        }
+
+        option[value="black"] {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        option[value="white"] {
+            background-color: #e6e6e6;
+        }
+
+        option[value="aqua"] {
+            background-color: #0088aa;
+
+        }
+
+        option[value="brown"] {
+            background-color: #483737;
+            color: white;
+        }
+
+        option[value="green"] {
+            background-color: #16502d;
+            color: white;
+        }
+
+        option[value="pink"] {
+            background-color: #e9afc6;
+        }
+
+        option, select {
+            font-family: 'Comme', sans-serif;
+            padding: 5px;
+            margin: 10px;
+            background-color: #469dff;
+        }
     </style>
     <title>Auto Spotted ZSET</title>
     <script src="https://kit.fontawesome.com/aa9e7a0864.js" crossorigin="anonymous"></script>
@@ -174,6 +213,25 @@
             document.getElementById("about").style.display = "none"
             document.getElementById("contact").style.display = "block"
         }
+
+        function changeSelectBackground() {
+            const select = document.getElementById("bg-color")
+            if (select.value === "basic") {
+                select.style.backgroundColor = "#3B4879"
+            } else if (select.value === "black") {
+                select.style.backgroundColor = "#1a1a1a"
+            } else if (select.value === "white") {
+                select.style.backgroundColor = "#e6e6e6"
+            } else if (select.value === "aqua") {
+                select.style.backgroundColor = "#0088aa"
+            } else if (select.value === "brown") {
+                select.style.backgroundColor = "#483737"
+            } else if (select.value === "green") {
+                select.style.backgroundColor = "#16502d"
+            } else if (select.value === "pink") {
+                select.style.backgroundColor = "#e9afc6"
+            }
+        }
     </script>
 </head>
 <body onload="resetData()">
@@ -184,6 +242,17 @@
         <textarea id="message" name="message" maxlength="250" rows="7" cols="20"></textarea><br>
         <label for="color">Wybierz kolor tekstu: </label><br>
         <input id="color" type="color" name="color"><br>
+        <label for="bg-color">Wybierz kolor tła: </label><br>
+        <select name="bg-color" id="bg-color" onchange="changeSelectBackground()">
+            <option value="basic" selected>Klasyczny</option>
+            <option value="black">Czarny</option>
+            <option value="white">Biały</option>
+            <option value="aqua">Aqua</option>
+            <option value="brown">Brązowy</option>
+            <option value="green">Zielony</option>
+            <option value="pink">Różowy</option>
+        </select><br>
+        <p>Zwróć uwagę, by kolor czcionki pasował do koloru tła, bo inaczej twoja wiadomość może być słabo widoczna.</p>
         <input type="button" value="Wyślij" id="send-button" onclick="handleButtonClick()">
     </form>
 </div>
