@@ -182,6 +182,7 @@
                 alert("Wiadomość jest przetwarzana. Proszę czekać...")
                 const button = document.getElementById("send-button")
                 const color = document.getElementById("textColor").value
+                const backgroundColor = document.getElementById("bg-color").value
                 button.disabled = true
                 const response = await fetch(
                     "http://130.61.254.123:8000/",
@@ -194,7 +195,7 @@
                             "Access-Control-Request-Headers": ["Content-Type", "Authorization"],
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({"message": dataToSend, "color": color})
+                        body: JSON.stringify({"message": dataToSend, "color": color, "bg-color": backgroundColor})
                     }
                 )
                 return response.json()

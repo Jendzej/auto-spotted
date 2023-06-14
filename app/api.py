@@ -36,7 +36,7 @@ async def send_message(body: dict):
                 else:
                     pass
         logger.info(f"Creating post with text (color: {body['color']}: \n {body['message']}")
-        response = create_image(body["message"], body["color"])
+        response = create_image(body["message"], body["color"], body["bg-color"])
         if response:
             report_added_post(body["message"])
         else:
