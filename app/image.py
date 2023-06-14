@@ -56,7 +56,7 @@ def remove_old_images(current_image_number):
         pass
 
 
-def create_image(text):
+def create_image(text, color):
     """ Creating image with given text based on base.png """
     try:
         global posts_count
@@ -64,7 +64,7 @@ def create_image(text):
         img = Image.open(f"{os.getcwd()}/images/base.png")
         font = ImageFont.truetype(f"{os.getcwd()}/fonts/NotoSansNandinagari-Regular.ttf", 50, encoding='utf-8')
 
-        draw_multiple_line_text(img, text, font, (255, 255, 255), 120)
+        draw_multiple_line_text(img, text, font, color, 120)
 
         img.save(f"{os.getcwd()}/images/image{posts_count}.png")
 

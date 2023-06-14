@@ -96,6 +96,10 @@
             text-decoration: none;
             color: #0055a2;
         }
+
+        #color {
+            margin: 10px;
+        }
     </style>
     <title>Auto Spotted ZSET</title>
     <script src="https://kit.fontawesome.com/aa9e7a0864.js" crossorigin="anonymous"></script>
@@ -138,6 +142,7 @@
             if (dataToSend.replaceAll(" ", "") !== "") {
                 alert("Wiadomość jest przetwarzana. Proszę czekać...")
                 const button = document.getElementById("send-button")
+                const color = document.getElementById("textColor").value
                 button.disabled = true
                 const response = await fetch(
                     "http://130.61.254.123:8000/",
@@ -150,7 +155,7 @@
                             "Access-Control-Request-Headers": ["Content-Type", "Authorization"],
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({"message": dataToSend})
+                        body: JSON.stringify({"message": dataToSend, "color": color})
                     }
                 )
                 return response.json()
@@ -177,6 +182,8 @@
     <form id="send-message-form">
         <label for="message">Wiadomość: </label><br>
         <textarea id="message" name="message" maxlength="250" rows="7" cols="20"></textarea><br>
+        <label for="color">Wybierz kolor tekstu: </label><br>
+        <input id="color" type="color" name="color"><br>
         <input type="button" value="Wyślij" id="send-button" onclick="handleButtonClick()">
     </form>
 </div>
@@ -186,7 +193,6 @@
     <p onclick="location.href= 'https://www.instagram.com/auto.spotted.zset/'" title="instagram.com">Instagram<br><i
             class="fa-brands fa-instagram"></i></p>
 </footer>
-<i style="font-size: 3px; color: #469dff">Version 1.1</i>
 <div id="about">
     <h2>O Auto Spotted ZSET</h2>
     <p>
