@@ -181,7 +181,7 @@
             if (dataToSend.replaceAll(" ", "") !== "") {
                 alert("Wiadomość jest przetwarzana. Proszę czekać...")
                 const button = document.getElementById("send-button")
-                const color = document.getElementById("textColor").value
+                const color = document.getElementById("color").value
                 const backgroundColor = document.getElementById("bg-color").value
                 button.disabled = true
                 const response = await fetch(
