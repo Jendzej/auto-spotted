@@ -136,20 +136,20 @@ cp .env.example .env
 
 Opis poszczególnych zmiennych środowiskowych
 
-
-| **Nazwa**            | **Opis**                                                                                                                                                | **Wartość domyślna**     |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| INSTAGRAM_ACCOUNT_ID | ID konta Instagram połączonego z aplikacją                                                                                                           |                             |
+| **Nazwa**            | **Opis**                                                                                                                                            | **Wartość domyślna**        |
+|----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------|
+| INSTAGRAM_ACCOUNT_ID | ID konta Instagram połączonego z aplikacją                                                                                                          |                             |
 | ACCESS_TOKEN         | Token dostępu do aplikacji z uprawnieniami do zarządzania treścią ([link do wygenerowania tokenu](https://developers.facebook.com/tools/explorer/)) |                             |
-| IMGUR_CLIENT_ID      | ID konta na platformie Imgur (do publikacji zdjęć, by dostać adres url)                                                                             |                             |
-| IMGUR_CLIENT_SECRET  | Hasło do konta na platformie Imgur                                                                                                                     |                             |
-| SMTP_PORT            | Port serwera SMTP                                                                                                                                       | 465                         |
+| IMAGE_KIT_PRIVATE    | ID konta na platformie ImageKit (do publikacji zdjęć, by dostać adres url)                                                                          |                             |
+| IMAGE_KIT_PUBLIC     | Hasło do konta na platformie ImageKit                                                                                                               |                             |
+| IMAGE_KIT_ENDPOINT   | Endpoint URL do konta na platformie Imgur                                                                                                           |                             |
+| SMTP_PORT            | Port serwera SMTP                                                                                                                                   | 465                         |
 | SMTP_PASSWORD        | Hasło do konta, z którego wysyłane są maile do administratora                                                                                       |                             |
 | SMTP_MAIL            | Mail konta, z którego wysyłane są maile do administratora                                                                                           | auto.spotted.zset@gmail.com |
-| ADMIN_MAIL           | Mail konta administratora                                                                                                                               |                             |
+| ADMIN_MAIL           | Mail konta administratora                                                                                                                           |                             |
 
-
-Po uzupełnieniu wszystkich zmiennych w pliku ***.env***, należy zainstalować na serwerze usługi Apache2 oraz Python3.10, a następnie wszystkie biblioteki Pythona, które dostępne są w pliku [requirements.txt](requirements.txt).
+Po uzupełnieniu wszystkich zmiennych w pliku ***.env***, należy zainstalować na serwerze usługi Apache2 oraz Python3.10,
+a następnie wszystkie biblioteki Pythona, które dostępne są w pliku [requirements.txt](requirements.txt).
 
 Można zrobić to za pomocą komendy:
 
@@ -157,15 +157,16 @@ Można zrobić to za pomocą komendy:
 python3.10 -m pip install -r requirements.txt
 ```
 
-
-Gdy moduły zostaną zainstalowane, można uruchomić backend - przechodząc najpierw do katalogu ***/app***, a następnie uruchamiając plik [api.py](app/api.py) wpisując komendę:
+Gdy moduły zostaną zainstalowane, można uruchomić backend - przechodząc najpierw do katalogu ***/app***, a następnie
+uruchamiając plik [api.py](app/api.py) wpisując komendę:
 
 ```shell
 python3.10 api.py
 ```
 
+Jeżeli aplikacja działa, należy edytować plik [index.html](pages/index.html) i w linijce numer 130 zmienić adres IP na
+adres IP, na którym działa backend. Po tej zmianie można uruchomić usługę
+Apache2 ([poradnik](https://soisk.info/index.php/Linux_Ubuntu_-_Instalacja_i_konfiguracja_serwera_Apache2)).
 
-Jeżeli aplikacja działa, należy edytować plik [index.html](pages/index.html) i w linijce numer 130 zmienić adres IP na adres IP, na którym działa backend. Po tej zmianie można uruchomić usługę Apache2 ([poradnik](https://soisk.info/index.php/Linux_Ubuntu_-_Instalacja_i_konfiguracja_serwera_Apache2)).
-
-
-Po prawidłowej konfiguracji strona powinna mieć możliwość komunikacji z backendem, a dzięki temu powinna poprawnie działać.
+Po prawidłowej konfiguracji strona powinna mieć możliwość komunikacji z backendem, a dzięki temu powinna poprawnie
+działać.

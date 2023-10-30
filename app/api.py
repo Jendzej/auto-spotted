@@ -23,18 +23,20 @@ app.add_middleware(
 
 @app.post("/")
 async def send_message(body: dict):
+    """ Function, that handles requests to API. """
     try:
         with open("banned_words.txt", "r") as f:
             for line in f.readlines():
-                if line.strip() in body["message"].replace(" ", ""):
+                if line.strip() in body["message"].replace(" ", "").lower() or len(body["message"]) <= 5:
+                    report_error(body["message"])
                     return {
-                        "status_code": 451,
-                        "message": "Unavailable For Legal Reasons"
+                        "status_code": 422,
+                        "message": "Unprocessable entity"
                     }
                 else:
                     pass
-        logger.info(f"Creating post with text: \n {body['message']}")
-        response = create_image(body["message"])
+        logger.info(f"Creating post with text (color: {body['color']}: \n {body['message']}")
+        response = create_image(body["message"], body["color"], body["bg-color"])
         if response:
             report_added_post(body["message"])
         else:
